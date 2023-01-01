@@ -1,32 +1,12 @@
-class Board
-    def initialize(color1, color2, color3, color4)
-        @color1 = color1
-        @color2 = color2
-        @color3 = color3
-        @color4 = color4
-    end
-     
-    def play
-        computer_list = [@color1, @color2, @color3, @color4]
-        10.times do
-            player_list = player_input()
-            p player_list
-            if player_list == computer_list
-                puts 'You broke the code, congrats!' 
-                break
-            else
-            puts 'It is not correct, try something else'
-            feedback_list = feedback(computer_list, player_list)
-            p  feedback_list
-            end
-        end
-    end
-
-end
-
+# Methods for the PlayerVsComputer class
 def player_input()
-    puts 'Write the colors'
+    color_options = ['red', 'blue', 'green', 'orange', 'pink', 'yellow', 'purple', 'brown']
+    puts "Available colors: #{color_options} \n\n"
     colors = gets.chomp.split
+    until (color_options.include?(colors[0]) && color_options.include?(colors[1]) && color_options.include?(colors[2]) && color_options.include?(colors[3])) && colors.length < 5
+        puts "You must pick 4 colors from the list! \n\n"
+        colors = gets.chomp.split
+    end
     return colors
 end
 
@@ -62,7 +42,24 @@ def feedback(list1, list2)
     end
     return list3
 end
-        
 
-board1 = Board.new('red', 'white', 'blue', 'green')
+class PlayerVsComputer
+    def play
+        color_options = ['red', 'blue', 'green', 'orange', 'pink', 'yellow', 'purple', 'brown']
+        computer_list = color_options.sample(4)
+        10.times do
+            player_list = player_input()
+            puts "#{player_list} \n\n"
+            if player_list == computer_list
+                puts 'You broke the code, congrats!' 
+                break
+            else
+            feedback_list = feedback(computer_list, player_list)
+            puts  "Feedback: #{feedback_list} \n\n"
+            end
+        end
+    end
+end
+
+board1 = PlayerVsComputer.new
 board1.play
